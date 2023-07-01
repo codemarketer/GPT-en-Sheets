@@ -13,7 +13,7 @@ const MAX_TOKENS = 200;
  *
  * @param {string} userprompt Indicación para el usuario
  * @param {string} userrole Establece como "user" para instruir como entrada del usuario
- * @param {number} temperature (Opcional) Temperatura. 2 es súper creativo mientras que 0 es muy exacto y preciso. Por defecto es 0.5.
+ * @param {number} temperature (Opcional) Temperatura. 2 es muy creativo mientras que 0 es exacto y preciso. Por defecto es 0.5.
  * @param {string} model (Opcional) Modelo ChatGPT a usar. Por defecto es "gpt-3.5-turbo".
  * @return Completion Devolución de ChatGPT
  * @customfunction
