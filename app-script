@@ -1,0 +1,53 @@
+/* Configuración de Variables 
+ * 1) Pega tu API Key de Open AI
+ * 2) Configura el límite de tokens 
+ */
+
+const SECRET_KEY = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+const MAX_TOKENS = 200;
+
+//Creado por @nichoflip https://twitter.com/nichoflip
+
+/**
+ * Configura el prompt con GPT-3
+ *
+ * @param {string} userprompt Indicación para el usuario
+ * @param {string} userrole Establece como "user" para instruir como entrada del usuario
+ * @param {number} temperature (Opcional) Temperatura. 2 es súper creativo mientras que 0 es muy exacto y preciso. Por defecto es 0.5.
+ * @param {string} model (Opcional) Modelo ChatGPT a usar. Por defecto es "gpt-3.5-turbo".
+ * @return Completion Devolución de ChatGPT
+ * @customfunction
+ */
+
+function AI(userprompt, userrole = "user", temperature = 0.5, model = "gpt-3.5-turbo") {
+
+  // Crear el array para la indicación del chat
+  // Más info: https://platform.openai.com/docs/guides/chat/introduction
+
+  const gptprompt = [
+      {role : userrole, content : userprompt},
+  ];
+
+  // Solicitudes API
+
+  const url = "https://api.openai.com/v1/chat/completions";
+  const payload = {
+    model: model,
+    messages: gptprompt,
+    temperature: temperature,
+    max_tokens: MAX_TOKENS,
+  };
+
+  const options = {
+    contentType: "application/json",
+    headers: { Authorization: "Bearer " + SECRET_KEY },
+    payload: JSON.stringify(payload),
+  };
+
+  const results = JSON.parse(UrlFetchApp.fetch(url, options).getContentText());
+  
+  // Devuelve los resultados de la llamada - para más información sobre la estructura de la respuesta, consulta la documentación:
+  // https://platform.openai.com/docs/api-reference/chat/create
+
+  return results.choices[0].message.content.trim();
+}
